@@ -70,10 +70,21 @@ export function getTopRepos(repos: GitHubRepo[]): ProcessedRepo[] {
     }))
 }
 
-export function calculateAccountAge(createdAt: string): number {
-  const createdDate = new Date(createdAt)
-  const diff = Date.now() - createdDate.getTime()
-  const years = diff / (1000 * 60 * 60 * 24 * 365)
+export function calculateAccountAge(createdAt: string): string {
+  const created = new Date(createdAt)
+  const now = new Date()
 
-  return Math.floor(years)
+  const months = (now.getFullYear() - created.getFullYear()) * 12 + (now.getMonth() - created.getMonth())
+
+  if (months < 1) {
+    const days = Math.floor((now.getTime() - created.getTime()) / (1000 * 60 * 60 * 24))
+    return `${days} ${days === 1 ? 'day' : 'days'}`
+  }
+
+  if (months < 12) {
+    return `${months} ${months === 1 ? 'month' : 'months'}`
+  }
+
+  const years = Math.floor(months / 12)
+  return `${years} ${years === 1 ? 'year' : 'years'}`
 }
