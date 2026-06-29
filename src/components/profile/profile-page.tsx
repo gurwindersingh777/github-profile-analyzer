@@ -18,7 +18,7 @@ import { AxiosError } from 'axios'
 export function ProfilePage({ username }: { username: string }) {
 
   const { data, isError, error } = useGithubProfile(username)
-  const { data: insights } = useAiInsights(data as ProcessedGitHubData)
+  const { data: insights, isLoading, isError: insightsError } = useAiInsights(data as ProcessedGitHubData)
 
   if (isError) {
     const status = (error as AxiosError)?.response?.status
@@ -82,7 +82,10 @@ export function ProfilePage({ username }: { username: string }) {
           {data ? <TopRepos repos={data.topRepos} /> : <TopReposSkeleton />}
         </div>
 
-        {insights ? <AIInsights insights={insights} /> : <AIInsightsSkeleton />}
+        {isLoading ?
+          <AIInsightsSkeleton /> :
+          <AIInsights insights={insights} isError={insightsError}
+          />}
       </div>
     </div>
   )

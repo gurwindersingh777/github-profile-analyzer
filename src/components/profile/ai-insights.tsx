@@ -1,7 +1,29 @@
 import { Sparkles, Check, Target, Trophy, Lightbulb } from "lucide-react";
 import { type AIInsights } from "@/types";
 
-export function AIInsights({ insights }: { insights: AIInsights }) {
+interface Props {
+  insights?: AIInsights
+  isError: boolean
+}
+
+export function AIInsights({ insights, isError }: Props) {
+
+  if (isError) {
+    return (
+      <section className="border-2   bg-card p-6 shadow-brutal">
+        <h2 className="font-bold text-destructive">
+          AI analysis unavailable
+        </h2>
+
+        <p className="mt-2 text-muted-foreground">
+          We couldn't generate AI insights right now. Your GitHub statistics are
+          still available. Please try again in a few moments.
+        </p>
+      </section>
+    )
+  }
+
+  if (!insights) return null
 
   return (
     <section className="border-2 border-border bg-card p-5 text-card-foreground shadow-brutal sm:p-6">

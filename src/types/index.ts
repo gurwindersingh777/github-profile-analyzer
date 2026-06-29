@@ -45,7 +45,7 @@ export interface ProcessedGitHubData {
     public_repos: number
     followers: number
     following: number
-    account_age_years: number
+    account_age_years: string
     location: string | null
     blog: string
     html_url: string
