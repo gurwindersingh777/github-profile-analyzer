@@ -1,9 +1,8 @@
 import { Sparkles, Check, Target, Trophy, Lightbulb } from "lucide-react";
 import { type AIInsights } from "@/types";
 
-
-
 export function AIInsights({ insights }: { insights: AIInsights }) {
+
   return (
     <section className="border-2 border-border bg-card p-5 text-card-foreground shadow-brutal sm:p-6">
       <div className="mb-5 flex items-center gap-2">
@@ -11,38 +10,54 @@ export function AIInsights({ insights }: { insights: AIInsights }) {
           <Sparkles className="h-5 w-5" />
         </span>
 
-        <h2 className="text-lg font-black tracking-tight">
-          AI Insights
-        </h2>
+        <h2 className="text-lg font-black tracking-tight">AI Insights</h2>
       </div>
 
       {/* Top Section */}
       <div className="grid gap-5 lg:grid-cols-3">
+
         <div className="flex flex-col items-center justify-center border-2 border-border bg-primary p-5 text-center text-primary-foreground shadow-brutal-sm">
           <Trophy className="mb-2 h-6 w-6" />
-
-          <p className="text-2xl font-black leading-tight">
-            {insights.archetype}
-          </p>
-
-          <p className="mt-2 text-sm font-bold uppercase tracking-wide">
-            Developer Archetype
-          </p>
+          <p className="text-2xl font-black leading-tight">{insights.archetype}</p>
+          <p className="mt-2 text-sm font-bold uppercase tracking-wide">Developer Archetype</p>
         </div>
 
         <div className="space-y-3 lg:col-span-2">
-          <p className="text-pretty text-sm leading-relaxed text-muted-foreground">
-            {insights.summary}
-          </p>
+          <p className="text-pretty text-sm leading-relaxed text-muted-foreground">{insights.summary}</p>
 
           <div className="border-2 border-border bg-muted p-4 shadow-brutal-sm">
-            <h3 className="mb-2 text-sm font-black uppercase tracking-wide">
-              Archetype Description
-            </h3>
+            <h3 className="mb-2 text-sm font-black uppercase tracking-wide">Archetype Description</h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">{insights.archetypeDescription}</p>
+          </div>
+        </div>
+      </div>
 
-            <p className="text-sm leading-relaxed text-muted-foreground">
-              {insights.archetypeDescription}
-            </p>
+      <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        <div className="border-2 border-border bg-muted p-4 shadow-brutal-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Career Level</p>
+          <p className="mt-2 text-lg font-black">{insights.careerLevel}</p>
+        </div>
+
+        <div className="border-2 border-border bg-muted p-4 shadow-brutal-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Confidence</p>
+          <p className="mt-2 text-lg font-black">{insights.confidenceScore}%</p>
+        </div>
+
+        <div className="border-2 border-border bg-muted p-4 shadow-brutal-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Best Fit Roles</p>
+          <div className="mt-2 space-y-1">
+            {insights.bestFitRoles.map((role) => (
+              <p key={role} className="flex items-start gap-2 text-sm font-semibold">□ {role}</p>
+            ))}
+          </div>
+        </div>
+
+        <div className="border-2 border-border bg-muted p-4 shadow-brutal-sm">
+          <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Learning Focus</p>
+          <div className="mt-2 space-y-1">
+            {insights.learningFocus.map((item) => (
+              <p key={item} className="text-sm font-semibold"><span>□</span> {item}</p>
+            ))}
           </div>
         </div>
       </div>
@@ -73,9 +88,7 @@ export function AIInsights({ insights }: { insights: AIInsights }) {
 
         {/* Improvements */}
         <div>
-          <h3 className="mb-2 text-sm font-black uppercase tracking-wide">
-            Improvements
-          </h3>
+          <h3 className="mb-2 text-sm font-black uppercase tracking-wide">Improvements</h3>
 
           <ul className="space-y-2">
             {insights.improvements.map((item) => (
@@ -116,5 +129,5 @@ export function AIInsights({ insights }: { insights: AIInsights }) {
         </div>
       </div>
     </section>
-  );
+  )
 }

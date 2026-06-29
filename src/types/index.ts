@@ -64,7 +64,13 @@ export interface AIInsights {
   summary: string
   archetype: string
   archetypeDescription: string
+
   strengths: string[]
   improvements: string[]
   suggestions: string[]
+
+  careerLevel: string
+  confidenceScore: number
+  bestFitRoles: string[]
+  learningFocus: string[]
 }
