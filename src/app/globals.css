@@ -83,6 +83,7 @@
   --sidebar-accent-foreground: #1a1a1a;
   --sidebar-border: #1a1a1a;
   --sidebar-ring: #16a34a;
+  --shadow-color: #1a1a1a;
 }
 
 .dark {
@@ -119,6 +120,7 @@
   --sidebar-accent-foreground: #0d1117;
   --sidebar-border: #e6edf3;
   --sidebar-ring: #3fb950;
+  --shadow-color: #e6edf3;
 }
 
 @layer base {

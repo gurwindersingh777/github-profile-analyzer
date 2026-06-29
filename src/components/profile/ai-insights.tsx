@@ -47,7 +47,7 @@ export function AIInsights({ insights }: { insights: AIInsights }) {
           <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Best Fit Roles</p>
           <div className="mt-2 space-y-1">
             {insights.bestFitRoles.map((role) => (
-              <p key={role} className="flex items-start gap-2 text-sm font-semibold">□ {role}</p>
+              <p key={role} className="flex items-start gap-2 text-sm font-semibold"><span>□</span>{role}</p>
             ))}
           </div>
         </div>
@@ -56,7 +56,7 @@ export function AIInsights({ insights }: { insights: AIInsights }) {
           <p className="text-xs font-black uppercase tracking-wide text-muted-foreground">Learning Focus</p>
           <div className="mt-2 space-y-1">
             {insights.learningFocus.map((item) => (
-              <p key={item} className="text-sm font-semibold"><span>□</span> {item}</p>
+              <p key={item} className="flex items-start gap-2 text-sm font-semibold"><span>□</span> {item}</p>
             ))}
           </div>
         </div>
