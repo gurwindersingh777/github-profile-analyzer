@@ -37,7 +37,7 @@ export function LanguageChart({ languages }: { languages: Record<string, number>
   return (
     <section className="flex h-full flex-col border-2 border-border bg-card p-5 text-card-foreground shadow-brutal sm:p-6">
       <h2 className="mb-4 text-lg font-black tracking-tight">Language Usage</h2>
-      <div className="h-72 w-full flex-1">
+      <div className="w-full h-80 sm:h-72">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -46,18 +46,20 @@ export function LanguageChart({ languages }: { languages: Record<string, number>
               nameKey="name"
               cx="50%"
               cy="50%"
-              innerRadius={50}
-              outerRadius={90}
+              innerRadius="40%"
+              outerRadius="70%"
               paddingAngle={2}
-              stroke="var(--border)"
-              strokeWidth={2}
             >
               {data.map((entry, index) => (
-                <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
+                <Cell
+                  key={entry.name}
+                  fill={COLORS[index % COLORS.length]}
+                />
               ))}
             </Pie>
+
             <Tooltip content={<ChartTooltip />} />
-            <Legend iconType="square" wrapperStyle={{ fontSize: '0.8rem', fontWeight: 600 }} />
+            <Legend verticalAlign="bottom" />
           </PieChart>
         </ResponsiveContainer>
       </div>
