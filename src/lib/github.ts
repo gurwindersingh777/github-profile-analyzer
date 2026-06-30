@@ -1,4 +1,4 @@
-import { GitHubRepo, GitHubUser, ProcessedRepo } from "@/types";
+import { GitHubRepo, GitHubUser, ProcessedGitHubData, ProcessedRepo } from "@/types";
 import axios from "axios";
 
 const headers = {
@@ -88,3 +88,61 @@ export function calculateAccountAge(createdAt: string): string {
   const years = Math.floor(months / 12)
   return `${years} ${years === 1 ? 'year' : 'years'}`
 }
+
+// every score is between 0–100
+function clamp(value: number) {
+  return Math.max(0, Math.min(100, Math.round(value)))
+}
+
+export function calculateDeveloperScore(user: GitHubUser, repos: GitHubRepo[]): ProcessedGitHubData["developerScore"] {
+
+  // Filter repositories
+  const ownRepos = repos.filter(repo => !repo.fork)
+  const activeRepos = ownRepos.filter(repo => !repo.archived)
+  const totalRepos = ownRepos.length || 1
+
+  // Documentation score
+  const reposWithDescription = ownRepos.filter(repo => repo.description?.trim()).length
+  const reposWithTopics = ownRepos.filter(repo => repo.topics.length > 0).length
+  const descriptionCoverage = reposWithDescription / totalRepos
+  const topicCoverage = reposWithTopics / totalRepos
+  const documentation = clamp(descriptionCoverage * 70 + topicCoverage * 30)
+  // Example --> 100 repos, 90 descriptions, 50 topics
+  // documentation --> 0.9 × 70 + 0.5 × 30 = 78
+
+  // Technology score
+  const uniqueLanguages = new Set(ownRepos.map(repo => repo.language).filter(Boolean))
+  const technology = clamp(uniqueLanguages.size * 12 + activeRepos.length * 0.6)
+  // Example --> 6 languages, 70 active repos
+  // technology --> 6 × 12 + 70 × 0.6 = 114 -> clamp(114) = 100
+
+  // Community score
+  const totalStars = ownRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0)
+  const totalForks = ownRepos.reduce((sum, repo) => sum + repo.forks_count, 0)
+  const community = clamp(user.followers * 0.4 + totalForks * 2 + Math.min(totalStars, 30))
+
+  // Portfolio score
+  const portfolio = clamp(ownRepos.length * 0.7 + uniqueLanguages.size * 8 + Math.min(totalStars, 30))
+
+  // Consistency score
+  const accountYears = (Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24 * 365)
+  const consistency = clamp(accountYears * 10 + activeRepos.length * 0.6)
+
+  // Overall
+  const overall = clamp(
+    portfolio * 0.30 +
+    documentation * 0.20 +
+    technology * 0.20 +
+    consistency * 0.15 +
+    community * 0.15
+  )
+
+  return {
+    overall,
+    portfolio,
+    documentation,
+    community,
+    consistency,
+    technology,
+  }
+} 

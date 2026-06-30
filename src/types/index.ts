@@ -57,6 +57,14 @@ export interface ProcessedGitHubData {
     totalForks: number
     mostUsedLanguage: string
     ownRepoCount: number
+  },
+  developerScore: {
+    overall: number
+    portfolio: number
+    documentation: number
+    community: number
+    consistency: number
+    technology: number
   }
 }
 

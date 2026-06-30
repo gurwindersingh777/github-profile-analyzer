@@ -87,3 +87,28 @@ export function AIInsightsSkeleton() {
     </div>
   )
 }
+
+export function DeveloperScoreSkeleton() {
+  return (
+    <section className="border-2 border-border bg-card p-6 shadow-brutal">
+      <Skeleton className="mb-6 h-6 w-48" />
+
+      <div className="mb-8 border-2 border-border p-4">
+        <Skeleton className="h-20 w-full" />
+      </div>
+
+      <div className="space-y-5">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i}>
+            <div className="mb-2 flex justify-between">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-4 w-10" />
+            </div>
+
+            <Skeleton className="h-4 w-full" />
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}

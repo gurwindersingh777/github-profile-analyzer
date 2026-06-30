@@ -1,4 +1,4 @@
-import { calculateAccountAge, fetchGitHubRepos, fetchGitHubUser, getTopRepos, processLanguages } from "@/lib/github";
+import { calculateAccountAge, calculateDeveloperScore, fetchGitHubRepos, fetchGitHubUser, getTopRepos, processLanguages } from "@/lib/github";
 import { ProcessedGitHubData } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -25,6 +25,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     const ownRepoCount = ownRepos.length
     const account_age_years = calculateAccountAge(user.created_at)
 
+    const developerScore = calculateDeveloperScore(user, repos)
+
     const processedGitHubData: ProcessedGitHubData = {
       user: {
         login: user.login,
@@ -47,6 +49,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         mostUsedLanguage,
         ownRepoCount,
       },
+      developerScore
     }
 
     return NextResponse.json(processedGitHubData, { status: 200 })

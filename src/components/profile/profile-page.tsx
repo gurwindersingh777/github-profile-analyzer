@@ -8,12 +8,14 @@ import { LanguageChart } from './language-chart'
 import { TopRepos } from './top-repos'
 import {
   ProfileHeaderSkeleton, StatsGridSkeleton, LanguageChartSkeleton, TopReposSkeleton, AIInsightsSkeleton,
+  DeveloperScoreSkeleton,
 } from '@/components/skeletons/profile-skeletons'
 import useGithubProfile from '@/hooks/useGithubProfile'
 import useAiInsights from '@/hooks/useAiInsights'
 import { ProcessedGitHubData } from '@/types'
 import { AIInsights } from './ai-insights'
 import { AxiosError } from 'axios'
+import { DeveloperScore } from './developer-score'
 
 export function ProfilePage({ username }: { username: string }) {
 
@@ -82,10 +84,9 @@ export function ProfilePage({ username }: { username: string }) {
           {data ? <TopRepos repos={data.topRepos} /> : <TopReposSkeleton />}
         </div>
 
-        {isLoading ?
-          <AIInsightsSkeleton /> :
-          <AIInsights insights={insights} isError={insightsError}
-          />}
+        {data ? <DeveloperScore score={data.developerScore} /> : <DeveloperScoreSkeleton />}
+
+        {isLoading ? <AIInsightsSkeleton /> : <AIInsights insights={insights} isError={insightsError} />}
       </div>
     </div>
   )
