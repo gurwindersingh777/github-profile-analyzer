@@ -1,178 +1,310 @@
 # GitHub Profile Analyzer + AI Insights
 
 
-<div align="center">
+AI-powered insights into any public GitHub profile. Search a GitHub username and instantly receive a comprehensive profile analysis including repository statistics, language distribution, GitHub Profile Score, AI-generated career insights, and a downloadable developer report.
 
-![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logoColor=white)
-![Groq](https://img.shields.io/badge/Groq-F55036?style=for-the-badge&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+### 🌐 Live 
 
-</div>
+https://github-profile-analyzer-insights.vercel.app
 
-AI-powered insights into any developer's GitHub profile. Enter a username and get a full breakdown of their stats, top languages, top repos, an AI-generated personality analysis, and a proprietary Developer Score 
+---
 
-**Live Demo:** https://github-profile-analyzer-insights.vercel.app
-
-## Screenshots
+# Screenshots
 
 <p align="center"><b>Home</b></p>
+
 <div align="center">
-  <img src="./screenshots/home.png"  alt="Home page" />
+<img src="./screenshots/home.png" alt="Home" />
 </div>
 
-<p align="center"><b>Profile Overview</b> &nbsp;|&nbsp; <b>Language Chart</b></p>
+<br/>
+
+<p align="center">
+<b>Profile Overview</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+<b>Language Usage</b>
+</p>
+
 <div align="center">
-  <img src="./screenshots/profile.png" width="400" alt="Profile overview" />
-  <img src="./screenshots/language-chart.png" width="400" alt="Language chart" />
+<img src="./screenshots/profile.png" width="400" />
+<img src="./screenshots/language-chart.png" width="400" />
 </div>
 
-<p align="center"><b>AI Insights</b> &nbsp;|&nbsp; <b>Developer Score</b></p>
+<br/>
+
+<p align="center">
+<b>AI Insights</b> &nbsp;&nbsp;|&nbsp;&nbsp;
+<b>GitHub Profile Score</b>
+</p>
+
 <div align="center">
-  <img src="./screenshots/ai-insights.png" width="400" alt="AI insights" />
-  <img src="./screenshots/developer-score.png" width="400" alt="Developer score" />
+<img src="./screenshots/ai-insights.png" width="400" />
+<img src="./screenshots/github-profile-score.png" width="400" />
 </div>
 
-## Features
+<br/>
 
-- Search any public GitHub username — no login required
-- **Profile overview** — avatar, bio, location, links, follower/following counts, account age
-- **Stats grid** — total stars earned, total forks, owned repo count, most-used language
-- **Language breakdown** — Recharts pie chart from a developer's own (non-fork, non-archived) repos
-- **Top repositories** — top 6 repos ranked by stars, with description, language, stars, forks, topics
-- **AI insights (Groq)** — archetype, summary, strengths, areas to improve, suggestions, career level, confidence score, best-fit roles, learning focus
-- **Developer Score** — a deterministic 0–100 score (plus 5 weighted sub-scores) computed entirely from real profile data
-- GitHub star button + dark/light theme toggle
-- Two independent loading states, so AI insights never block the GitHub stats from rendering
-- Client-side caching via TanStack Query — searching the same username twice is instant
-- Fully responsive · no auth · no database
+---
 
-## Tech Stack
+# Features
+
+- 🔍 Analyze any public GitHub profile (no authentication required)
+- 👤 Complete profile overview including bio, location, website, followers, following, repositories, and account age
+- 📊 GitHub statistics including:
+  - Total stars
+  - Total forks
+  - Repository count
+  - Most-used language
+- 📈 Interactive language distribution chart
+- ⭐ Top repositories ranked by popularity with:
+  - Description
+  - Language
+  - Stars
+  - Forks
+  - Topics
+- 🤖 AI-generated developer insights powered by Groq:
+  - Developer archetype
+  - Professional summary
+  - Strengths
+  - Areas for improvement
+  - Career suggestions
+  - Learning roadmap
+  - Best-fit roles
+  - Confidence score
+- 🏆 GitHub Profile Score (0–100) with category breakdown:
+  - Portfolio
+  - Technology
+  - Documentation
+  - Community
+  - Consistency
+- 📄 Download a beautifully designed GitHub Developer Report as an image
+- ⚡ Independent loading states so GitHub data renders before AI insights
+- 🚀 Instant repeat searches using TanStack Query caching
+- 🌙 Dark / Light mode
+- 📱 Fully responsive
+- 💾 No database required
+
+---
+
+# Tech Stack
 
 | Layer | Technology |
-|---|---|
+|--------|------------|
 | Framework | Next.js (App Router) |
 | Language | TypeScript |
 | Styling | Tailwind CSS + shadcn/ui |
-| Data fetching | TanStack Query |
+| State Management | TanStack Query |
 | Charts | Recharts |
-| Data source | GitHub REST API |
-| AI | Groq API (OpenAI-compatible SDK) |
+| Image Export | html-to-image |
+| GitHub Data | GitHub REST API |
+| AI | Groq API |
 | Deployment | Vercel |
 
-## How It Works
+---
 
+# How It Works
+
+```text
+User enters a GitHub username
+            │
+            ▼
+Navigate to /[username]
+            │
+            ▼
+GET /api/github/[username]
+            │
+            ▼
+GitHub REST API
+            │
+            ▼
+Process repositories
+• Filter forks
+• Ignore archived repos
+• Calculate language usage
+• Rank repositories
+• Generate GitHub Profile Score
+            │
+            ▼
+Render profile components
+(Profile Header, Stats, Charts, Score, Repositories)
+            │
+            ▼
+POST /api/analyze
+            │
+            ▼
+Groq AI
+            │
+            ▼
+Generate structured AI insights
+            │
+            ▼
+User can download a GitHub Developer Report
 ```
-User searches a username on the homepage
-↓
-Navigates to /[username]
-↓
-useGitHubProfile (TanStack Query) → GET /api/github/[username]
-↓
-Server fetches the user + repos from the GitHub REST API, filters
-forks/archived repos, calculates language %, top repos, account
-age, and the Developer Score
-↓
-ProfileHeader, StatsGrid, LanguageChart, TopRepos, and
-DeveloperScore render immediately
-↓
-useAIInsights fires once GitHub data is available
-↓
-POST /api/analyze → Groq returns a structured JSON personality
-analysis → AIInsights renders
-```
 
-## Getting Started
+---
 
-### Prerequisites
+# Getting Started
 
-- Node.js 18.18 or later
-- A [GitHub personal access token](https://github.com/settings/tokens) — classic token, no scopes needed
-- A [Groq API key](https://console.groq.com/keys) — free tier available
+## Prerequisites
 
-### Installation
+- Node.js 18+
+- GitHub Personal Access Token (Classic, no scopes required)
+- Groq API Key
+
+---
+
+## Installation
 
 ```bash
 git clone https://github.com/gurwindersingh777/github-profile-analyzer.git
+
 cd github-profile-analyzer
+
 npm install
 ```
 
-### Environment Variables
+---
 
-Create a `.env.local` file:
+## Environment Variables
 
-```bash
-GITHUB_TOKEN=your_token_here
-GROQ_API_KEY=your_key_here
+Create a `.env.local` file.
+
+```env
+GITHUB_TOKEN=your_github_token
+GROQ_API_KEY=your_groq_api_key
 ```
 
-### Run locally
+---
+
+## Run the project
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Project Structure
+Visit
 
 ```
-src/
-├── app/
-│   ├── [username]/page.tsx             # Profile analysis page
-│   ├── api/
-│   │   ├── analyze/route.ts            # Calls Groq, returns AI insights
-│   │   └── github/[username]/route.ts  # Fetches + processes GitHub data
+http://localhost:3000
+```
+
+---
+
+# Project Structure
+
+```text
+src
+├── app
+│   ├── [username]
+│   ├── api
+│   │   ├── analyze
+│   │   └── github
 │   ├── layout.tsx
-│   └── page.tsx                        # Homepage
-├── components/
-│   ├── home/                           # Search bar, feature cards, theme toggle
-│   ├── profile/                        # Header, stats, chart, repos, AI insights, score
-│   ├── skeletons/
-│   ├── ui/                             # shadcn/ui primitives
-│   └── provider.tsx                    # TanStack Query provider
-├── hooks/                              # TanStack Query hooks
-├── lib/
-│   ├── ai.ts                           # Groq client + prompt builder
-│   └── github.ts                       # GitHub API + data processing + Developer Score
-└── types/index.ts
+│   └── page.tsx
+│
+├── components
+│   ├── home
+│   ├── profile
+│   ├── export
+│   ├── skeletons
+│   ├── ui
+│   └── providers.tsx
+│
+├── hooks
+│
+├── lib
+│   ├── ai.ts
+│   ├── github.ts
+│   └── download.ts
+│
+└── types
 ```
 
-## API Reference
+---
 
-| Route | Method | Description |
-|---|---|---|
-| `/api/github/[username]` | GET | Fetches + processes GitHub profile data |
-| `/api/analyze` | POST | Sends profile data to Groq, returns AI insights |
+# API
 
-Errors: `404` user not found · `429` GitHub rate limit · `400` bad request · `500` server/Groq failure
+## GET `/api/github/[username]`
 
-## Developer Score
+Returns processed GitHub profile data.
 
-A deterministic 0–100 score, independent of the AI insights:
+### Response
 
-| Sub-score | Weight | Based on |
-|---|---|---|
-| Portfolio | 30% | Repo count, language diversity, stars |
-| Documentation | 20% | % of repos with a description and topics |
-| Technology | 20% | Language diversity, active repo count |
-| Consistency | 15% | Account age, active repo count |
-| Community | 15% | Followers, forks, stars |
+- User profile
+- Repository statistics
+- Language distribution
+- Top repositories
+- GitHub Profile Score
 
-## Deployment
+---
 
-1. Push to GitHub
-2. Import the project on [Vercel](https://vercel.com/new)
-3. Add `GITHUB_TOKEN` and `GROQ_API_KEY` in Project Settings → Environment Variables
+## POST `/api/analyze`
+
+Generates AI insights from the processed GitHub profile.
+
+Returns:
+
+- Summary
+- Archetype
+- Strengths
+- Improvements
+- Suggestions
+- Career level
+- Confidence score
+- Best-fit roles
+- Learning focus
+
+---
+
+# GitHub Profile Score
+
+The GitHub Profile Score is a deterministic score between **0–100** calculated entirely from GitHub profile data. It does **not** rely on AI.
+
+| Category | Weight |
+|----------|--------|
+| Portfolio | 30% |
+| Technology | 20% |
+| Documentation | 20% |
+| Community | 15% |
+| Consistency | 15% |
+
+The score evaluates repository quality, documentation, language diversity, community engagement, account maturity, and overall portfolio strength.
+
+---
+
+# Deployment
+
+Deploy easily with Vercel.
+
+1. Push the project to GitHub
+2. Import the repository into Vercel
+3. Configure:
+
+```
+GITHUB_TOKEN
+GROQ_API_KEY
+```
+
 4. Deploy
 
+---
 
+# Future Improvements
 
-## Author
+- PDF export
+- GitHub contribution calendar
+- Compare two GitHub profiles
+- Repository filtering
+- More score metrics
+- Shareable report links
 
-**Gurwinder**
-GitHub: [@gurwindersingh777](https://github.com/gurwindersingh777) 
+---
+
+# Author
+
+**Gurwinder Singh**
+
+GitHub: https://github.com/gurwindersingh777
+
+---
+
+If you found this project helpful, consider giving it a ⭐ on GitHub!
