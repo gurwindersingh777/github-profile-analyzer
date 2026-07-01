@@ -88,7 +88,7 @@ export function AIInsightsSkeleton() {
   )
 }
 
-export function DeveloperScoreSkeleton() {
+export function GitHubProfileScoreSkeleton() {
   return (
     <section className="border-2 border-border bg-card p-6 shadow-brutal">
       <Skeleton className="mb-6 h-6 w-48" />

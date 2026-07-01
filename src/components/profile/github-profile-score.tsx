@@ -21,7 +21,7 @@ interface Metric {
   icon: React.ElementType;
 }
 
-export function DeveloperScore({ score }: Props) {
+export function GitHubProfileScore({ score }: Props) {
   const metrics: Metric[] = [
     {
       label: "Portfolio",
@@ -75,7 +75,7 @@ export function DeveloperScore({ score }: Props) {
 
         <div>
           <h2 className="text-lg font-black tracking-tight">
-            Developer Score
+            Github Profile Score
           </h2>
 
           <p className="text-sm text-muted-foreground">

@@ -27,7 +27,7 @@ const features = [
   },
   {
     icon: Trophy,
-    title: 'Developer Score',
+    title: 'Github Profile Score',
     description: 'A holistic score of impact, consistency, and skill.',
     iconBg: 'bg-destructive',
     iconFg: 'text-background',
