@@ -16,6 +16,7 @@ import { ProcessedGitHubData } from '@/types'
 import { AIInsights } from './ai-insights'
 import { AxiosError } from 'axios'
 import { GitHubProfileScore } from './github-profile-score'
+import { DownloadProfileButton } from './download-profile-button'
 
 export function ProfilePage({ username }: { username: string }) {
 
@@ -67,13 +68,18 @@ export function ProfilePage({ username }: { username: string }) {
 
   return (
     <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6">
-      <Link
-        href="/"
-        className="mb-6 inline-flex items-center gap-2 border-2 border-border bg-card px-3 py-1.5 text-sm font-bold text-card-foreground shadow-brutal-sm transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal"
-      >
-        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-        New search
-      </Link>
+
+      <div className="mb-6 flex items-center justify-between">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-2 border-2 border-border bg-card px-3 py-1.5 text-sm font-bold text-card-foreground shadow-brutal-sm transition-transform hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal"
+        >
+          <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+          New search
+        </Link>
+
+        {data && <DownloadProfileButton data={data} />}
+      </div>
 
       <div className="space-y-6">
         {data ? <ProfileHeader user={data.user} /> : <ProfileHeaderSkeleton />}
