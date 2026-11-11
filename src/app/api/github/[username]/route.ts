@@ -10,7 +10,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Fetch GitHub data
     const user = await fetchGitHubUser(username.trim().toLowerCase())
     const repos = await fetchGitHubRepos(username.trim().toLowerCase())
-
     // Keep only own repositories
     const ownRepos = repos.filter((repo) => !repo.fork)
 
@@ -54,13 +53,15 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     return NextResponse.json(processedGitHubData, { status: 200 })
   } catch (error) {
+    console.error("GitHub API Route Error:", error);
 
     if (error instanceof Error) {
-      const msg = error.message
-      if (msg === "USER_NOT_FOUND") return NextResponse.json({ error: "USER_NOT_FOUND" }, { status: 404 })
-      if (msg === "RATE_LIMIT") return NextResponse.json({ error: "RATE_LIMIT" }, { status: 429 })
+      const msg = error.message;
+      if (msg === "USER_NOT_FOUND") return NextResponse.json({ error: msg }, { status: 404 });
+      if (msg === "RATE_LIMIT") return NextResponse.json({ error: msg }, { status: 429 });
+      if (msg === "INVALID_GITHUB_TOKEN") return NextResponse.json({ error: msg }, { status: 500 });
     }
-
-    return NextResponse.json({ error: "INTERNAL SERVER ERROR" }, { status: 500 })
   }
+
+  return NextResponse.json({ error: "INTERNAL SERVER ERROR" }, { status: 500 });
 }
